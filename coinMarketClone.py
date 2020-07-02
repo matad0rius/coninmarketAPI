@@ -1,5 +1,6 @@
 import requests
 from prettytable import PrettyTable
+import os 
 
 listings_api = 'https://api.coinmarketcap.com/v2/listings/'
 ticker_api = 'https://api.coinmarketcap.com/v2/ticker/?start='
@@ -52,5 +53,6 @@ coins.reverse()
 
 [table.add_row for coin in coins[:100]]
 
+os.system('cls') # clean our command line 
 print(table)
 table.clear_rows()
