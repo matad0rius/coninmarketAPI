@@ -8,8 +8,13 @@ listings_data = requests.get(listings_api).json()['data']
 table = PrettyTable()
 table.field_names = ['Name','Symbol','Price','Volume','MarketCap','Change 1h','Change 24h','Change 7d']
 
-nr_coins = 0
+def isNone(number):
+    if number:
+        return float(number)
+    return 0
 
+nr_coins = 1
+coins = []
 while nr_coins < len(listings_data):
 
     temp_ticker_api = ticker_api + str(nr_coins)
@@ -21,15 +26,31 @@ while nr_coins < len(listings_data):
         symbol = ticker_data[coin]['symbol']
         coin = ticker_data[coin]['quotes']['USD']
 
-        table.add_row([ name,
+        coins.append([ name,
                         symbol,
-                        coin['price'],
-                        coin['volume_24h'],
-                        coin['market_cap'],
-                        coin['percent_change_1h'],
-                        coin['percent_change_24h'],
-                        coin['percent_change_7d']])
+                        isNone()coin['price'],
+                        isNone()coin['volume_24h'],
+                        isNone()coin['market_cap'],
+                        isNone()coin['percent_change_1h'],
+                        isNone()coin['percent_change_24h'],
+                        isNone()coin['percent_change_7d']])
 
     nr_coins += 100
 
+while True:
+    
+ number = 1
+ print("Press: ")
+ for item in table.field_names:
+        print(str(number) + '. Sort by' + item)
+        numer += 1
+        
+        
+choice = input("Choose sort option: ")
+coins.sort(key=lambda x:x[int(choice) - 1])
+coins.reverse()
+
+[table.add_row for coin in coins[:100]]
+
 print(table)
+table.clear_rows()
